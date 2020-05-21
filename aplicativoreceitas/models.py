@@ -1,9 +1,9 @@
 from django.db import models
 from datetime import datetime
-from aplicativocozinheiros.models import Cozinheiro
+from django.contrib.auth.models import User
 
 class Receita(models.Model):
-    cozinheiro = models.ForeignKey(Cozinheiro, on_delete=models.CASCADE)
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
     nome_receita = models.CharField(max_length=200)
     ingredientes = models.TextField()
     modo_preparo = models.TextField()
