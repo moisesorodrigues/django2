@@ -41,6 +41,8 @@
                         <div class="receipe-content">
                             <a href="{% url 'receita' receita.id %}">
                                 <h5>{{receita.nome_receita}}</h5>
+                                <a href="{% url 'editar_receita' receita.id %}" type="button" class="btn btn-info">Editar</a>
+                                <a href="{% url 'excluir_receita' receita.id %}" type="button" class="btn btn-danger">Excluir</a>
                             </a>
                         </div>
                     </div>

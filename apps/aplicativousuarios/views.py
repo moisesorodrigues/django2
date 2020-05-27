@@ -7,6 +7,7 @@ from django.contrib import auth, messages
 from aplicativoreceitas.models import Receita
 
 def cadastrar(request):
+    """ Realiza o cadastro de um novo usuário """
     if request.method == 'POST':
         nome = request.POST['nome']
         if validarAtributo(nome):
@@ -40,6 +41,7 @@ def cadastrar(request):
         return render(request, 'usuarios/cadastro.html')
 
 def login(request):
+    """ Realiza o login do usuário através do e-mail e password"""
     if request.method == 'POST':
         email = request.POST['email']
         password = request.POST['senha']
@@ -48,6 +50,9 @@ def login(request):
             return redirect('login')
         if User.objects.filter(email=email).exists():
             nome = User.objects.filter(email=email).values_list('username', flat=True).get()
+        else:
+            messages.error(request, 'Nome NÃO associado com o endereço de email informado!')
+            return render(request, 'usuarios/login.html')
         user = auth.authenticate(request, username=nome, password=password)
         if user is not None:
             auth.login(request, user)
@@ -71,30 +76,6 @@ def dashboard(request):
 def logout(request):
     auth.logout(request)
     return redirect('index')
-
-def adicionar_receita(request):
-    if request.method == 'POST':
-        nome_receita = request.POST['nome_receita']
-        ingredientes = request.POST['ingredientes']
-        modo_preparo = request.POST['modo_preparo']
-        tempo_preparo = request.POST['tempo_preparo']
-        rendimento = request.POST['rendimento']
-        categoria = request.POST['categoria']
-        imagem_receita = request.FILES['imagem_receita']
-        
-        usuario = get_object_or_404(User, pk=request.user.id)
-        receita = Receita.objects.create(usuario=usuario, 
-                                            nome_receita=nome_receita, 
-                                            ingredientes=ingredientes, 
-                                            modo_preparo=modo_preparo, 
-                                            tempo_preparo=tempo_preparo, 
-                                            rendimento=rendimento, 
-                                            categoria=categoria, 
-                                            imagem_receita=imagem_receita)
-        receita.save()
-        return redirect('dashboard')
-    else:
-        return render(request, 'usuarios/adiciona_receita.html')
 
 def validarAtributo(atributo):
     return not atributo.strip()
