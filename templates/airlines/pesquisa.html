@@ -1,0 +1,13 @@
+{% extends "baseairlines.html" %}
+{% block content %}
+
+<p>Sua origem é: {{form.origem.value}}</p>
+<p>Seu destino é: {{form.destino.value}}</p>
+<p>Sua data de ida é: {{form.data_ida.value}}</p>
+<p>Sua data de volta é: {{form.data_volta.value}}</p>
+<p>Sua data de pesquisa é: {{form.data_pesquisa.value}}</p>
+<p>Seu tipo de classe é: {{form.tipo_classe.value}}</p>
+<p>Suas observações são: {{form.info.value}}</p>
+<p>Seu e-mail é: {{pessoa_form.email.value}}</p>
+
+{% endblock %}
